@@ -1,0 +1,17 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+preview/
+installer/out/
+# runtime data written next to a portable DiskHawk.exe
+Reports/
+settings.ini
+machines.txt
+deletion_audit.csv
+*.log
+*.log.1
+*.dhr
+# build tools downloaded by build.ps1 / installer\build-msi.ps1 (.NET SDK, WiX)
+.tools/

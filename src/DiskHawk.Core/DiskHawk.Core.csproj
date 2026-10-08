@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>DiskHawk.Core</AssemblyName>
+    <RootNamespace>DiskHawk.Core</RootNamespace>
+  </PropertyGroup>
+</Project>

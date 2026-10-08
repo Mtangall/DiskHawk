@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- standalone single exe copied to remote machines: Core sources are compiled in, no DLL dependency. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>DiskHawk.Scanner</AssemblyName>
+    <AssemblyTitle>DiskHawk Scanner</AssemblyTitle>
+    <RootNamespace>DiskHawk.Scanner</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\..\assets\diskhawk.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\DiskHawk.Core\**\*.cs"
+             Exclude="..\DiskHawk.Core\obj\**;..\DiskHawk.Core\bin\**"
+             LinkBase="Core" />
+  </ItemGroup>
+</Project>

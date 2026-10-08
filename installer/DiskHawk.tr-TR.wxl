@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- DiskHawk installer strings, Turkish (embedded as language transform 1055). The dialog texts themselves come from WixUIExtension. -->
+<WixLocalization Culture="tr-TR" Codepage="1254" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="Language">1055</String>
+  <String Id="DowngradeError">[ProductName] uygulamasının daha yeni bir sürümü zaten yüklü.</String>
+  <String Id="NetFxRequired">[ProductName] için .NET Framework 4.8 veya üzeri gerekir. https://dotnet.microsoft.com/download/dotnet-framework adresinden yükleyip kurulumu yeniden çalıştırın.</String>
+  <String Id="ShortcutDescription">Filo disk analizi</String>
+  <String Id="ReportFileType">DiskHawk raporu</String>
+  <String Id="LaunchApp">DiskHawk'ı başlat</String>
+</WixLocalization>

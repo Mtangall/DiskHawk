@@ -1,0 +1,42 @@
+# Builds DiskHawk and the MSI (English/Turkish, with license agreement) on Windows.
+# - every push / pull request: build + MSI as a downloadable artifact
+# - tag "v*" (e.g. v1.4.0): additionally creates a GitHub Release with the MSI attached
+name: build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v7
+
+      # same scripts as a local build: build.cmd uses the runner's Visual Studio MSBuild;
+      # build-msi.cmd uses an installed WiX 3.14 or downloads it (hash-checked)
+      - name: Build solution
+        shell: cmd
+        run: build.cmd
+
+      - name: Build MSI
+        shell: cmd
+        run: installer\build-msi.cmd
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: DiskHawk-msi
+          path: installer/out/*.msi
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v3
+        with:
+          files: installer/out/*.msi
+          generate_release_notes: true

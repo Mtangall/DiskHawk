@@ -1,0 +1,26 @@
+﻿<Project>
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <!-- run 64-bit on 64-bit Windows: in a 32-bit process the System32 -> SysWOW64 redirection would distort results -->
+    <Prefer32Bit>false</Prefer32Bit>
+    <OutputPath>$(MSBuildThisFileDirectory)..\bin\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Company>DiskHawk</Company>
+    <Product>DiskHawk</Product>
+    <Description>DiskHawk - Fleet Disk Analytics</Description>
+    <Version>1.4.0</Version>
+    <Copyright>Copyright © 2026 DiskHawk contributors</Copyright>
+    <Authors>DiskHawk contributors</Authors>
+    <RepositoryUrl>https://github.com/Mtangall/DiskHawk</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Deterministic>true</Deterministic>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <!-- With 'dotnet build' the .NET Framework reference assemblies come from NuGet.
+       Visual Studio / MSBuild use the installed 4.8 targeting pack. -->
+  <ItemGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

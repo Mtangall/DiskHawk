@@ -1,0 +1,44 @@
+# DiskHawk — End-User License Agreement
+
+Please read this agreement carefully before installing DiskHawk. By accepting this agreement, or by installing,
+copying or using the software, you agree to its terms. If you do not agree, do not install or use DiskHawk.
+
+# 1. License
+
+DiskHawk is free, open-source software distributed under the MIT License, reproduced in full in section 6.
+Nothing in this agreement limits the rights the MIT License grants you; sections 2 to 5 explain how the software
+works and the responsibilities that come with using it.
+
+# 2. Administrative tool: deletions are permanent
+
+DiskHawk is a tool for system administrators. It runs with administrator rights and can permanently delete files
+and folders on the local computer and on remote computers. Deleted items do not go to the Recycle Bin and
+DiskHawk cannot restore them. Review every deletion before you confirm it, try the software in a test environment
+first and keep current backups.
+
+# 3. Authorized use only
+
+Use DiskHawk only on computers and networks that you own or are authorized to administer, and in accordance with
+applicable law and your organization's policies. To scan or clean a remote computer, DiskHawk copies a small
+scanner program (DiskHawk.Scanner.exe) to an administrators-only folder under C:\Windows\DiskHawk on that
+computer, runs it through WMI with the credentials of the account running DiskHawk and removes it afterwards.
+Endpoint protection products may flag this behavior; get approval from your security team before you use
+DiskHawk on a network.
+
+# 4. Data and privacy
+
+DiskHawk collects no telemetry and sends no data to its authors or to any third party. Scan reports, settings,
+machine lists, logs and the deletion audit log are stored on the computer where DiskHawk runs (by default in
+%LOCALAPPDATA%\DiskHawk) or in folders you choose. These files can contain computer names, user names and file and
+folder names, which may be personal data; protect and retain them in line with the data protection laws that
+apply to you.
+
+# 5. No warranty
+
+The software is provided "as is", without warranty of any kind. To the maximum extent permitted by applicable law,
+the authors and copyright holders are not liable for any damages, including loss of data, arising from the use of
+or inability to use the software (see section 6).
+
+# 6. MIT License
+
+{LICENSE}

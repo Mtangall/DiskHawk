@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  DiskHawk MSI (WiX Toolset v3.14). Build with installer\build-msi.cmd after build.cmd; the script
+    - compiles this file once and links it per culture (en-US, tr-TR) with DiskHawk.<culture>.wxl and the
+      license agreement generated from EULA.<culture>.txt (light -dWixUILicenseRtf=...),
+    - embeds the Turkish build into the English one as a language transform, so a single MSI shows
+      Turkish dialogs and EULA on Turkish Windows and English everywhere else.
+  Per-machine install (UAC prompt) to C:\Program Files\DiskHawk: license agreement, Start menu shortcut, .dhr association.
+  Preprocessor variables: Version, ProductCode, BinDir, AssetsDir.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?ifndef ProductCode?>
+    <?define ProductCode = "*" ?>
+  <?endif?>
+  <!-- UpgradeCode must never change: it links all versions so a new MSI replaces the old one.
+       ProductCode is generated per build by build-msi.ps1 and shared by all cultures: a language transform must not change it. -->
+  <Product Id="$(var.ProductCode)" Name="DiskHawk" Language="!(loc.Language)" Version="$(var.Version)"
+           Manufacturer="DiskHawk contributors" UpgradeCode="CEC07560-E2F1-4484-88C4-C2AC9D9936EF">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" Platform="x64"
+             Description="DiskHawk - Fleet Disk Analytics" Manufacturer="DiskHawk contributors"
+             Comments="Agentless disk usage analysis for Windows fleets. MIT License." />
+
+    <!-- AllowSameVersionUpgrades: a rebuilt MSI with the same version replaces the installed one instead of installing side by side -->
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="!(loc.DowngradeError)" />
+    <Media Id="1" Cabinet="diskhawk.cab" EmbedCab="yes" />
+
+    <!-- .NET Framework 4.8 = release 528040 or later -->
+    <Property Id="NETFXRELEASE">
+      <RegistrySearch Id="NetFxRelease" Root="HKLM" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Name="Release" Type="raw" Win64="yes" />
+    </Property>
+    <Condition Message="!(loc.NetFxRequired)"><![CDATA[Installed OR (NETFXRELEASE >= "#528040")]]></Condition>
+
+    <Icon Id="DiskHawkIcon" SourceFile="$(var.AssetsDir)/diskhawk.ico" />
+    <Property Id="ARPPRODUCTICON" Value="DiskHawkIcon" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/Mtangall/DiskHawk" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/Mtangall/DiskHawk/issues" />
+    <Property Id="ARPURLUPDATEINFO" Value="https://github.com/Mtangall/DiskHawk/releases" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="DiskHawk" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder" />
+    </Directory>
+
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="cmpConsole" Guid="B6684441-9C47-489C-BC91-6F50672493AD" Win64="yes">
+        <File Id="DiskHawkExe" Name="DiskHawk.exe" Source="$(var.BinDir)/DiskHawk.exe" KeyPath="yes" />
+        <!-- Only SYSTEM and Administrators may change the program folder, wherever it is installed (a custom folder
+             would otherwise inherit e.g. the C:\ permissions): the console deploys DiskHawk.Scanner.exe from here to
+             every scanned machine. Users: read and execute. -->
+        <CreateFolder>
+          <PermissionEx Sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;0x1200a9;;;BU)" />
+        </CreateFolder>
+      </Component>
+      <Component Id="cmpConsoleConfig" Guid="9B01C5A8-0594-447D-B33B-75FA79B76C4C" Win64="yes">
+        <File Id="DiskHawkExeConfig" Name="DiskHawk.exe.config" Source="$(var.BinDir)/DiskHawk.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="cmpCore" Guid="4171E6BD-6B5F-420B-893B-4D5F861B86B8" Win64="yes">
+        <File Id="DiskHawkCoreDll" Name="DiskHawk.Core.dll" Source="$(var.BinDir)/DiskHawk.Core.dll" KeyPath="yes" />
+      </Component>
+      <!-- the scanner must stay next to DiskHawk.exe: its SHA-256 is embedded in DiskHawk.exe -->
+      <Component Id="cmpScanner" Guid="75F03FF8-6AC4-4CFC-A567-23D88E0337C7" Win64="yes">
+        <File Id="ScannerExe" Name="DiskHawk.Scanner.exe" Source="$(var.BinDir)/DiskHawk.Scanner.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="cmpScannerConfig" Guid="7FEB9E07-FCEE-4216-8823-57B098DD825A" Win64="yes">
+        <File Id="ScannerExeConfig" Name="DiskHawk.Scanner.exe.config" Source="$(var.BinDir)/DiskHawk.Scanner.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="cmpLicense" Guid="571CA6B5-5222-446A-930D-03875A7EBFAF" Win64="yes">
+        <File Id="LicenseTxt" Name="LICENSE.txt" Source="../LICENSE" KeyPath="yes" />
+      </Component>
+
+      <!-- .dhr file association (machine-wide) -->
+      <Component Id="cmpFileAssoc" Guid="02A20103-F019-4774-8649-45030EEF72EA" Win64="yes">
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.dhr" Type="string" Value="DiskHawk.Report" KeyPath="yes" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\DiskHawk.Report" Type="string" Value="!(loc.ReportFileType)" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\DiskHawk.Report\DefaultIcon" Type="string" Value="&quot;[INSTALLFOLDER]DiskHawk.exe&quot;,0" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\DiskHawk.Report\shell\open\command" Type="string" Value="&quot;[INSTALLFOLDER]DiskHawk.exe&quot; &quot;%1&quot;" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ProgramMenuFolder">
+      <Component Id="cmpShortcut" Guid="19145350-747B-4F74-B5E1-6D164BA1913C" Win64="yes">
+        <Shortcut Id="StartMenuShortcut" Name="DiskHawk" Description="!(loc.ShortcutDescription)"
+                  Target="[INSTALLFOLDER]DiskHawk.exe" WorkingDirectory="INSTALLFOLDER" Icon="DiskHawkIcon" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\DiskHawk" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Installer UI: welcome, license agreement, install folder, progress, finish (with "Launch DiskHawk", checked by default).
+         Requires WixUIExtension and WixUtilExtension (WixShellExec). The license agreement (WixUILicenseRtf) is generated
+         from EULA.<culture>.txt and passed to light by build-msi.ps1. The UAC prompt comes from the per-machine install. -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchApp)" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+    <!-- runs from the UI sequence, i.e. as the logged-on user without elevation -->
+    <Property Id="WixShellExecTarget" Value="[#DiskHawkExe]" />
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND NOT Installed</Publish>
+    </UI>
+    <WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="dialog.bmp" />
+
+    <Feature Id="Main" Title="DiskHawk" Level="1">
+      <ComponentRef Id="cmpConsole" />
+      <ComponentRef Id="cmpConsoleConfig" />
+      <ComponentRef Id="cmpCore" />
+      <ComponentRef Id="cmpScanner" />
+      <ComponentRef Id="cmpScannerConfig" />
+      <ComponentRef Id="cmpLicense" />
+      <ComponentRef Id="cmpFileAssoc" />
+      <ComponentRef Id="cmpShortcut" />
+    </Feature>
+  </Product>
+</Wix>

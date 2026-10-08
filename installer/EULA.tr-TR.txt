@@ -1,0 +1,67 @@
+# DiskHawk — Son Kullanıcı Lisans Sözleşmesi
+
+Lütfen DiskHawk'ı kurmadan önce bu sözleşmeyi dikkatle okuyun. Bu sözleşmeyi kabul ederek ya da yazılımı kurarak,
+kopyalayarak veya kullanarak sözleşme koşullarını kabul etmiş olursunuz. Kabul etmiyorsanız DiskHawk'ı kurmayın ve
+kullanmayın.
+
+# 1. Lisans
+
+DiskHawk, MIT Lisansı ile dağıtılan ücretsiz ve açık kaynaklı bir yazılımdır; lisansın tam metni 6. bölümdedir.
+Bu sözleşmedeki hiçbir hüküm MIT Lisansı'nın size tanıdığı hakları kısıtlamaz; 2-5. bölümler yazılımın nasıl
+çalıştığını ve kullanımıyla birlikte gelen sorumlulukları açıklar.
+
+# 2. Yönetim aracı: silme işlemleri kalıcıdır
+
+DiskHawk sistem yöneticileri için bir araçtır. Yönetici yetkileriyle çalışır; yerel bilgisayarda ve uzak
+bilgisayarlarda dosya ve klasörleri kalıcı olarak silebilir. Silinen öğeler Geri Dönüşüm Kutusu'na gitmez ve
+DiskHawk bunları geri getiremez. Her silme işlemini onaylamadan önce gözden geçirin, yazılımı önce bir test
+ortamında deneyin ve güncel yedekler bulundurun.
+
+# 3. Yalnızca yetkili kullanım
+
+DiskHawk'ı yalnızca sahibi olduğunuz veya yönetmeye yetkili olduğunuz bilgisayar ve ağlarda, yürürlükteki mevzuata
+ve kurumunuzun politikalarına uygun olarak kullanın. DiskHawk, uzak bir bilgisayarı taramak veya temizlemek için o
+bilgisayarda C:\Windows\DiskHawk altında yalnızca yöneticilerin erişebildiği bir klasöre küçük bir tarayıcı
+programı (DiskHawk.Scanner.exe) kopyalar, bunu DiskHawk'ı çalıştıran hesabın kimlik bilgileriyle WMI üzerinden
+çalıştırır ve işlem bitince kaldırır. Uç nokta güvenlik ürünleri bu davranışı şüpheli olarak işaretleyebilir;
+DiskHawk'ı bir ağda kullanmadan önce güvenlik ekibinizin onayını alın.
+
+# 4. Veriler ve gizlilik
+
+DiskHawk telemetri toplamaz; yazarlarına veya herhangi bir üçüncü tarafa veri göndermez. Tarama raporları, ayarlar,
+makine listeleri, günlükler ve silme denetim kaydı DiskHawk'ın çalıştığı bilgisayarda (varsayılan olarak
+%LOCALAPPDATA%\DiskHawk klasöründe) veya sizin seçtiğiniz klasörlerde saklanır. Bu dosyalar bilgisayar adları,
+kullanıcı adları ve dosya/klasör adları içerebilir; bunlar kişisel veri niteliği taşıyabilir. Bu dosyaları tabi
+olduğunuz veri koruma mevzuatına (örneğin 6698 sayılı Kişisel Verilerin Korunması Kanunu) uygun şekilde koruyun ve
+saklayın.
+
+# 5. Garanti reddi
+
+Yazılım, hiçbir garanti verilmeksizin "olduğu gibi" sunulur. Yürürlükteki mevzuatın izin verdiği azami ölçüde,
+yazarlar ve telif hakkı sahipleri yazılımın kullanılmasından veya kullanılamamasından doğan, veri kaybı dahil
+hiçbir zarardan sorumlu tutulamaz (bkz. 6. bölüm).
+
+# 6. MIT Lisansı
+
+Aşağıda MIT Lisansı'nın bağlayıcı İngilizce metni ve bilgi amaçlı, resmî olmayan Türkçe çevirisi yer alır. İki
+metin arasında farklılık olması hâlinde İngilizce metin geçerlidir.
+
+{LICENSE}
+
+# Resmî olmayan Türkçe çeviri
+
+Telif Hakkı (c) 2026 DiskHawk contributors
+
+Bu yazılımın ve ilgili belge dosyalarının ("Yazılım") bir kopyasını edinen herkese, Yazılım'ı kısıtlama olmaksızın
+kullanma izni ücretsiz olarak verilir; bu izin, aşağıdaki koşullara tabi olmak kaydıyla, Yazılım'ın kopyalarını
+kullanma, kopyalama, değiştirme, birleştirme, yayımlama, dağıtma, alt lisanslama ve/veya satma haklarını ve
+Yazılım'ın sağlandığı kişilere de bunları yapma izni verme hakkını sınırlama olmaksızın kapsar:
+
+Yukarıdaki telif hakkı bildirimi ve bu izin bildirimi, Yazılım'ın tüm kopyalarına veya önemli bölümlerine
+eklenmelidir.
+
+YAZILIM, TİCARİ ELVERİŞLİLİK, BELİRLİ BİR AMACA UYGUNLUK VE HAK İHLALİ BULUNMAMASI GARANTİLERİ DAHİL ANCAK BUNLARLA
+SINIRLI OLMAMAK ÜZERE, AÇIK VEYA ZIMNİ HİÇBİR GARANTİ OLMAKSIZIN "OLDUĞU GİBİ" SAĞLANMAKTADIR. YAZARLAR VEYA TELİF
+HAKKI SAHİPLERİ, HİÇBİR DURUMDA, SÖZLEŞMEDEN, HAKSIZ FİİLDEN VEYA BAŞKA BİR SEBEPTEN KAYNAKLANAN VE YAZILIMDAN,
+YAZILIMIN KULLANIMINDAN VEYA YAZILIMLA İLGİLİ DİĞER İŞLEMLERDEN DOĞAN HİÇBİR TALEP, ZARAR VEYA DİĞER YÜKÜMLÜLÜKTEN
+SORUMLU TUTULAMAZ.
